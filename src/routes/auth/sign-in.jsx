@@ -71,6 +71,8 @@ export default function SingIn() {
         password: formData().password,
       });
 
+      console.log(result);
+
       if (result.status && result.status >= 400) {
         toast.error(result.message);
       } else if (result.token && result.is_artist) {

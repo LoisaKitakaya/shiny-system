@@ -6,14 +6,16 @@ const [authState, setAuthState] = createStore({
 });
 
 const [userInfo, setUserInfo] = createStore({
-  role: Cookies.get("role"),
+  is_artist: Cookies.get("is_artist"),
 });
 
-const login = (token, is_artist) => {
+const login = (token, is_artist = false) => {
   logout();
 
   Cookies.set("session", token, { expires: 3 });
-  Cookies.set("is_artist", is_artist, { expires: 3 });
+  Cookies.set("is_artist", (is_artist = is_artist ? "Yes" : "No"), {
+    expires: 3,
+  });
 
   setAuthState({ isAuthenticated: true });
 };
