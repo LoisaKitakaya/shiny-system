@@ -14,12 +14,42 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 
 import App from "./App";
 import Home from "./routes";
+import Seller from "./routes/seller";
+import { MetaProvider } from "@solidjs/meta";
+import NotFound from "./routes/404";
+import SingIn from "./routes/auth/sign-in";
+import SignUp from "./routes/auth/sign-up";
+import CreateAccount from "./routes/auth/create-account";
+import TermsAndConditions from "./routes/terms-and-conditions";
+import PrivacyPolicy from "./routes/privacy-policy";
 
 render(
   () => (
-    <Router root={App}>
-      <Route path="/" component={<Home />} />
-    </Router>
+    <MetaProvider>
+      <Router root={App}>
+        <Route path="/" component={Home} />
+
+        <Route path="*404" component={NotFound} />
+
+        <Route path="/terms-and-conditions" component={TermsAndConditions} />
+
+        <Route path="/privacy-policy" component={PrivacyPolicy} />
+
+        <Route path="/auth">
+          <Route path="/sign-in" component={SingIn} />
+          <Route path="/sign-up" component={SignUp} />
+          <Route path="/create-account" component={CreateAccount} />
+          {/* <Route
+            path="/security/request-password-reset"
+            component={RequestPasswordReset}
+          /> */}
+        </Route>
+
+        <Route path="/seller">
+          <Route path="/" component={Seller} />
+        </Route>
+      </Router>
+    </MetaProvider>
   ),
   root
 );

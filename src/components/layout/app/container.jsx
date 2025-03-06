@@ -9,10 +9,13 @@ export default function Container(props) {
         <div className="navbar-center hidden lg:flex mx-auto">
           <ul className="menu menu-horizontal px-1">
             <li>
+              <a href="/">Home</a>
+            </li>
+            <li>
               <a>Become A Seller</a>
             </li>
             <li>
-              <a>Seller Console</a>
+              <a href="/seller">Seller Console</a>
             </li>
             <li>
               <a>Contact Us</a>
