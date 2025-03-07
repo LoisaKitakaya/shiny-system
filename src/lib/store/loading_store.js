@@ -11,7 +11,7 @@ const startLoading = () => {
   setLoadingState({ isLoading: true, progress: 0 });
   intervalId = setInterval(() => {
     setLoadingState("progress", (prev) => (prev < 90 ? prev + 1 : prev));
-  }, 60);
+  }, 80);
 };
 
 const stopLoading = () => {
