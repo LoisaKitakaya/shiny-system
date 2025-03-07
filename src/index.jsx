@@ -23,6 +23,7 @@ import CreateAccount from "./routes/auth/create-account";
 import TermsAndConditions from "./routes/terms-and-conditions";
 import PrivacyPolicy from "./routes/privacy-policy";
 import Account from "./routes/account";
+import SellerProduct from "./routes/seller/product";
 
 render(
   () => (
@@ -52,6 +53,7 @@ render(
 
         <Route path="/seller">
           <Route path="/" component={Seller} />
+          <Route path="/product/:product_id" component={SellerProduct} />
         </Route>
       </Router>
     </MetaProvider>

@@ -1,17 +1,14 @@
-import moment from "moment";
 import toast from "solid-toast";
 import Cookies from "js-cookie";
-import { useNavigate } from "@solidjs/router";
-import { logout } from "../../lib/store/auth_store";
 import { backendAPI } from "../../lib/utils/secrets";
+import { createSignal, Match, Switch } from "solid-js";
+import { closeModal } from "../../lib/store/modal_store";
 import { getErrorMessage } from "../../lib/utils/responses";
-import { createEffect, createSignal, Match, Show, Switch } from "solid-js";
 import {
   loadingState,
   startLoading,
   stopLoading,
 } from "../../lib/store/loading_store";
-import { closeModal } from "../../lib/store/modal_store";
 
 const createStore = async (data) => {
   const token = Cookies.get("session");
