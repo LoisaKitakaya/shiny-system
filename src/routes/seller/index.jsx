@@ -1,9 +1,23 @@
+import { useSearchParams } from "@solidjs/router";
+import MetaTitle from "../../components/meta/meta-title";
+import Container from "../../components/layout/app/container";
 import BuyerLimitation from "../../components/auth/buyer_limitation";
 import RouteProtection from "../../components/auth/route_protection";
-import Container from "../../components/layout/app/container";
-import MetaTitle from "../../components/meta/meta-title";
+import { Match, onMount, Switch } from "solid-js";
 
 export default function Seller() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  onMount(() => {
+    if (!searchParams.tab) {
+      setSearchParams({ tab: "dashboard" });
+    }
+  });
+
+  const changeTab = (name) => {
+    setSearchParams({ tab: name });
+  };
+
   return (
     <>
       <MetaTitle title="Seller" />
@@ -11,29 +25,51 @@ export default function Seller() {
       <RouteProtection>
         <BuyerLimitation>
           <Container show_navbar_2={false}>
-            <div className="drawer">
-              <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-              <div className="drawer-content">
-                {/* Page content here */}
-                <div>Seller Page</div>
-              </div>
-              <div className="drawer-side z-50">
-                <label
-                  htmlFor="my-drawer"
-                  aria-label="close sidebar"
-                  className="drawer-overlay"
-                ></label>
-                <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-                  {/* Sidebar content here */}
-                  <li>
-                    <a>Sidebar Item 1</a>
-                  </li>
-                  <li>
-                    <a>Sidebar Item 2</a>
-                  </li>
-                </ul>
-              </div>
+            <div role="tablist" className="tabs tabs-box">
+              <a
+                role="tab"
+                className={`tab ${
+                  searchParams.tab === "dashboard" ? "tab-active" : ""
+                }`}
+                onClick={() => changeTab("dashboard")}
+              >
+                Dashboard
+              </a>
+              <a
+                role="tab"
+                className={`tab ${
+                  searchParams.tab === "products" ? "tab-active" : ""
+                }`}
+                onClick={() => changeTab("products")}
+              >
+                Products
+              </a>
+              <a
+                role="tab"
+                className={`tab ${
+                  searchParams.tab === "transactions" ? "tab-active" : ""
+                }`}
+                onClick={() => changeTab("transactions")}
+              >
+                Transaction
+              </a>
             </div>
+
+            <Switch>
+              <Match when={searchParams.tab === "dashboard"}>
+                <div className="my-6 mx-2">Dashboard - Charts come here</div>
+              </Match>
+              <Match when={searchParams.tab === "products"}>
+                <div className="my-6 mx-2">
+                  Products - User can add/edit/delete products here
+                </div>
+              </Match>
+              <Match when={searchParams.tab === "transactions"}>
+                <div className="my-6 mx-2">
+                  Transactions - User can see their transaction history here
+                </div>
+              </Match>
+            </Switch>
           </Container>
         </BuyerLimitation>
       </RouteProtection>

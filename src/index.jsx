@@ -22,6 +22,7 @@ import SignUp from "./routes/auth/sign-up";
 import CreateAccount from "./routes/auth/create-account";
 import TermsAndConditions from "./routes/terms-and-conditions";
 import PrivacyPolicy from "./routes/privacy-policy";
+import Account from "./routes/account";
 
 render(
   () => (
@@ -34,6 +35,10 @@ render(
         <Route path="/terms-and-conditions" component={TermsAndConditions} />
 
         <Route path="/privacy-policy" component={PrivacyPolicy} />
+
+        <Route path="/account">
+          <Route path="/" component={Account} />
+        </Route>
 
         <Route path="/auth">
           <Route path="/sign-in" component={SingIn} />

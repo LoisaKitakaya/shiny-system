@@ -17,44 +17,23 @@ export default function Container(props) {
                 <a href="/">Home</a>
               </li>
               <li>
-                <a>Blogs</a>
+                <a href="/blogs">Blogs</a>
               </li>
               <li>
-                <a>FAQ's</a>
+                <a href="/faqs">FAQ's</a>
               </li>
               <li>
-                <a>Become An Affiliate</a>
+                <a href="/affiliate-program">Become An Affiliate</a>
               </li>
               <li>
-                <a>Contact Us</a>
+                <a href="/contact-us">Contact Us</a>
               </li>
-              {/* <li>
-              <div className="dropdown dropdown-hover dropdown-end">
-                <div tabIndex={0}>
-                  Resources <i class="bi bi-chevron-down"></i>
-                </div>
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
-                >
-                  <li>
-                    <a>Blogs</a>
-                  </li>
-                  <li>
-                    <a>FAQ's</a>
-                  </li>
-                  <li>
-                    <a>Become An Affiliate</a>
-                  </li>
-                </ul>
-              </div>
-            </li> */}
             </ul>
           </div>
         </div>
       </Show>
 
-      <div className="h-screen py-2 px-4">{props.children}</div>
+      <div className="min-h-screen py-2 px-4">{props.children}</div>
 
       <Footer />
     </>

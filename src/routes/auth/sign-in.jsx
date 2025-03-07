@@ -75,14 +75,14 @@ export default function SingIn() {
 
       if (result.status && result.status >= 400) {
         toast.error(result.message);
-      } else if (result.token && result.is_artist) {
+      } else if (result.token) {
         login(result.token, result.is_artist);
 
         const nextUrl = searchParams.next?.startsWith("/")
           ? searchParams.next
           : "/";
 
-        navigate(nextUrl);
+        location.replace(nextUrl);
       }
     } catch (error) {
       toast.error(

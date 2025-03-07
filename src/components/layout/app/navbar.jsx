@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "@solidjs/router";
-import { logout, userInfo } from "../../../lib/store/auth_store";
+import { authState, logout, userInfo } from "../../../lib/store/auth_store";
 import { Show } from "solid-js";
 
 export default function Navbar(props) {
@@ -48,19 +48,6 @@ export default function Navbar(props) {
           </div>
         </div>
         <div className="navbar-end gap-4">
-          <Show
-            when={
-              userInfo.is_artist === "Yes" &&
-              location.pathname.startsWith("/seller")
-            }
-          >
-            <label
-              htmlFor="my-drawer"
-              className="btn btn-circle btn-outline border-gray-100 hover:bg-gray-100"
-            >
-              <i class="bi bi-list text-2xl"></i>
-            </label>
-          </Show>
           <div className="dropdown dropdown-end dropdown-hover">
             <div
               tabIndex={0}
@@ -73,23 +60,27 @@ export default function Navbar(props) {
               tabIndex={0}
               className="dropdown-content menu bg-base-100 rounded-box z-1 w-40 p-2 shadow-sm"
             >
+              <Show when={!location.pathname.startsWith("/account")}>
               <li>
-                <a>Account</a>
+                <a href="/account">Account</a>
               </li>
+              </Show>
               <Show when={!location.pathname.startsWith("/seller")}>
                 <li>
                   <a href="/seller">Seller Console</a>
                 </li>
               </Show>
-              <div className="divider m-0 p-0"></div>
-              <li>
-                <button
-                  className="btn btn-sm btn-error w-full"
-                  onClick={logOut}
-                >
-                  Log Out
-                </button>
-              </li>
+              <Show when={authState.isAuthenticated}>
+                <div className="divider m-0 p-0"></div>
+                <li>
+                  <button
+                    className="btn btn-sm btn-error w-full"
+                    onClick={logOut}
+                  >
+                    Log Out
+                  </button>
+                </li>
+              </Show>
             </ul>
           </div>
           <Show when={!location.pathname.startsWith("/seller")}>
