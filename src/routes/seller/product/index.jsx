@@ -4,6 +4,7 @@ import {
   createSignal,
   For,
   Match,
+  Suspense,
   Switch,
 } from "solid-js";
 import BuyerLimitation from "../../../components/auth/buyer_limitation";
@@ -22,7 +23,7 @@ import {
   stopLoading,
 } from "../../../lib/store/loading_store";
 import { closeModal, openModal } from "../../../lib/store/modal_store";
-import moment from "moment";
+import Spinner from "../../../components/layout/spinner";
 
 const updateProduct = async (product_id, data) => {
   const token = Cookies.get("session");
@@ -32,14 +33,14 @@ const updateProduct = async (product_id, data) => {
   }
 
   const options = {
-    method: "PUT",
+    method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
     },
     body: data,
   };
 
-  const url = `${backendAPI}/api/v1/store/products/${product_id}`;
+  const url = `${backendAPI}/api/v1/store/products/${product_id}/update`;
 
   try {
     const response = await fetch(url, options);
@@ -317,189 +318,210 @@ export default function SellerProduct() {
       <RouteProtection>
         <BuyerLimitation>
           <Container show_navbar_2={false}>
-            <Switch>
-              <Match when={sellerProduct()}>
-                <div className="my-2">
-                  <div className="card bg-base-100 w-full sm:w-96 md:w-[48rem] lg:w-full shadow-sm border border-gray-100 mb-8">
-                    <div className="card-body">
-                      <h2 className="card-title flex justify-between items-center">
-                        <span>Product Information</span>
-                        <button
-                          className="btn btn-sm btn-error"
-                          onClick={confirmPrompt}
-                        >
-                          Delete Product
-                        </button>
-                      </h2>
+            <Suspense fallback={<Spinner />}>
+              <div className="breadcrumbs text-sm">
+                <ul>
+                  <li>
+                    <a className="link text-primary" href="/">
+                      Home
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="link text-primary"
+                      href="/seller?tab=products"
+                    >
+                      Seller Console
+                    </a>
+                  </li>
+                  <li>{params.product_id}</li>
+                </ul>
+              </div>
 
-                      <div className="divider p-0 m-0" />
-
-                      <div className="avatar">
-                        <div className="w-full rounded">
-                          <img
-                            src={
-                              sellerProduct()?.image ||
-                              "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                            }
-                          />
-                        </div>
-                      </div>
-
-                      <div className="divider p-0 m-0" />
-
-                      <form onSubmit={handleUpdate}>
-                        <div className="grid grid-cols-6 gap-6 mb-4">
-                          <div className="col-span-6 sm:col-span-3">
-                            <label
-                              htmlFor="ProductName"
-                              className="block text-sm font-medium "
-                            >
-                              {" "}
-                              Product Name{" "}
-                            </label>
-
-                            <input
-                              id="ProductName"
-                              type="text"
-                              name="name"
-                              value={sellerProduct().name}
-                              onInput={handleChange}
-                              className="mt-1 input input-md input-bordered w-full text-sm shadow-sm"
-                            />
-                          </div>
-
-                          <div className="col-span-6 sm:col-span-3">
-                            <label
-                              htmlFor="Price"
-                              className="block text-sm font-medium "
-                            >
-                              {" "}
-                              Price ($){" "}
-                            </label>
-
-                            <input
-                              id="Price"
-                              type="number"
-                              name="price"
-                              value={sellerProduct().price}
-                              onInput={handleChange}
-                              className="mt-1 input input-md input-bordered w-full text-sm shadow-sm"
-                            />
-                          </div>
-
-                          <div className="col-span-6 sm:col-span-3">
-                            <label
-                              htmlFor="Stock"
-                              className="block text-sm font-medium "
-                            >
-                              Stock
-                            </label>
-
-                            <input
-                              id="Stock"
-                              type="number"
-                              name="stock"
-                              value={sellerProduct().stock}
-                              onInput={handleChange}
-                              className="mt-1 input input-md input-bordered w-full text-sm shadow-sm"
-                            />
-                          </div>
-
-                          <div className="col-span-6 sm:col-span-3">
-                            <label
-                              htmlFor="Category"
-                              className="block text-sm font-medium "
-                            >
-                              Category
-                            </label>
-
-                            <select
-                              name="category_id"
-                              onChange={handleChange}
-                              defaultValue="Pick a category"
-                              className="select select-md select-bordered w-full"
-                            >
-                              <For each={productCategories()}>
-                                {(item, index) => (
-                                  <option
-                                    key={index()}
-                                    value={item.id}
-                                    selected={
-                                      sellerProduct().category.id === item.id
-                                    }
-                                  >
-                                    {item.name}
-                                  </option>
-                                )}
-                              </For>
-                            </select>
-                          </div>
-
-                          <div className="col-span-6">
-                            <label
-                              htmlFor="Image"
-                              className="block text-sm font-medium "
-                            >
-                              Product Image
-                            </label>
-
-                            <input
-                              id="Image"
-                              type="file"
-                              name="file"
-                              accept="image/*"
-                              onChange={handleChange}
-                              className="mt-1 file-input file-input-md file-input-bordered w-full text-sm shadow-sm"
-                            />
-                          </div>
-
-                          <div className="col-span-6">
-                            <label
-                              htmlFor="ProductDescription"
-                              className="block text-sm font-medium "
-                            >
-                              {" "}
-                              Product Description{" "}
-                            </label>
-
-                            <textarea
-                              id="ProductDescription"
-                              name="description"
-                              placeholder="Product Description"
-                              onInput={handleChange}
-                              value={sellerProduct().description}
-                              className="mt-1 textarea textarea-md textarea-bordered w-full text-sm shadow-sm"
-                            ></textarea>
-                          </div>
-                        </div>
-
-                        <div className="card-actions justify-end">
+              <Switch>
+                <Match when={sellerProduct()}>
+                  <div className="my-2">
+                    <div className="card bg-base-100 w-full sm:w-96 md:w-[48rem] lg:w-full shadow-sm border border-gray-100 mb-8">
+                      <div className="card-body">
+                        <h2 className="card-title flex justify-between items-center">
+                          <span>Product Information</span>
                           <button
-                            type="submit"
-                            className="btn btn-primary"
-                            disabled={loadingState.isLoading}
+                            className="btn btn-sm btn-error"
+                            onClick={confirmPrompt}
                           >
-                            <Switch>
-                              <Match when={!loadingState.isLoading}>
-                                <span>Save Changes</span>
-                              </Match>
-                              <Match when={loadingState.isLoading}>
-                                <span className="loading loading-bars loading-sm"></span>
-                              </Match>
-                            </Switch>
+                            Delete Product
                           </button>
+                        </h2>
+
+                        <div className="divider p-0 m-0" />
+
+                        <div className="avatar">
+                          <div className="w-full rounded">
+                            <img
+                              src={
+                                sellerProduct()?.image ||
+                                "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                              }
+                            />
+                          </div>
                         </div>
-                      </form>
+
+                        <div className="divider p-0 m-0" />
+
+                        <form onSubmit={handleUpdate}>
+                          <div className="grid grid-cols-6 gap-6 mb-4">
+                            <div className="col-span-6 sm:col-span-3">
+                              <label
+                                htmlFor="ProductName"
+                                className="block text-sm font-medium "
+                              >
+                                {" "}
+                                Product Name{" "}
+                              </label>
+
+                              <input
+                                id="ProductName"
+                                type="text"
+                                name="name"
+                                value={sellerProduct().name}
+                                onInput={handleChange}
+                                className="mt-1 input input-md input-bordered w-full text-sm shadow-sm"
+                              />
+                            </div>
+
+                            <div className="col-span-6 sm:col-span-3">
+                              <label
+                                htmlFor="Price"
+                                className="block text-sm font-medium "
+                              >
+                                {" "}
+                                Price ($){" "}
+                              </label>
+
+                              <input
+                                id="Price"
+                                type="number"
+                                name="price"
+                                value={sellerProduct().price}
+                                onInput={handleChange}
+                                className="mt-1 input input-md input-bordered w-full text-sm shadow-sm"
+                              />
+                            </div>
+
+                            <div className="col-span-6 sm:col-span-3">
+                              <label
+                                htmlFor="Stock"
+                                className="block text-sm font-medium "
+                              >
+                                Stock
+                              </label>
+
+                              <input
+                                id="Stock"
+                                type="number"
+                                name="stock"
+                                value={sellerProduct().stock}
+                                onInput={handleChange}
+                                className="mt-1 input input-md input-bordered w-full text-sm shadow-sm"
+                              />
+                            </div>
+
+                            <div className="col-span-6 sm:col-span-3">
+                              <label
+                                htmlFor="Category"
+                                className="block text-sm font-medium "
+                              >
+                                Category
+                              </label>
+
+                              <select
+                                name="category_id"
+                                onChange={handleChange}
+                                defaultValue="Pick a category"
+                                className="select select-md select-bordered w-full"
+                              >
+                                <For each={productCategories()}>
+                                  {(item, index) => (
+                                    <option
+                                      key={index()}
+                                      value={item.id}
+                                      selected={
+                                        sellerProduct().category.id === item.id
+                                      }
+                                    >
+                                      {item.name}
+                                    </option>
+                                  )}
+                                </For>
+                              </select>
+                            </div>
+
+                            <div className="col-span-6">
+                              <label
+                                htmlFor="Image"
+                                className="block text-sm font-medium "
+                              >
+                                Product Image
+                              </label>
+
+                              <input
+                                id="Image"
+                                type="file"
+                                name="file"
+                                accept="image/*"
+                                onChange={handleChange}
+                                className="mt-1 file-input file-input-md file-input-bordered w-full text-sm shadow-sm"
+                              />
+                            </div>
+
+                            <div className="col-span-6">
+                              <label
+                                htmlFor="ProductDescription"
+                                className="block text-sm font-medium "
+                              >
+                                {" "}
+                                Product Description{" "}
+                              </label>
+
+                              <textarea
+                                id="ProductDescription"
+                                name="description"
+                                placeholder="Product Description"
+                                onInput={handleChange}
+                                value={sellerProduct().description}
+                                className="mt-1 textarea textarea-md textarea-bordered w-full text-sm shadow-sm"
+                              ></textarea>
+                            </div>
+                          </div>
+
+                          <div className="card-actions justify-end">
+                            <button
+                              type="submit"
+                              className="btn btn-primary"
+                              disabled={loadingState.isLoading}
+                            >
+                              <Switch>
+                                <Match when={!loadingState.isLoading}>
+                                  <span>Save Changes</span>
+                                </Match>
+                                <Match when={loadingState.isLoading}>
+                                  <span className="loading loading-bars loading-sm"></span>
+                                </Match>
+                              </Switch>
+                            </button>
+                          </div>
+                        </form>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Match>
-              <Match when={!sellerProduct()}>
-                <div className="my-2">
-                  <Error />
-                </div>
-              </Match>
-            </Switch>
+                </Match>
+                <Match when={!sellerProduct()}>
+                  <div className="my-2">
+                    <Error />
+                  </div>
+                </Match>
+              </Switch>
+            </Suspense>
           </Container>
         </BuyerLimitation>
       </RouteProtection>

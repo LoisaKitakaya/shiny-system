@@ -119,7 +119,16 @@ export default function Seller() {
       <RouteProtection>
         <BuyerLimitation>
           <Container show_navbar_2={false}>
-            <div role="tablist" className="tabs tabs-box">
+            <div className="breadcrumbs text-sm">
+              <ul>
+                <li>
+                  <a className="link text-primary" href="/">Home</a>
+                </li>
+                <li>Seller Console</li>
+              </ul>
+            </div>
+
+            <div role="tablist" className="tabs tabs-sm tabs-box flex gap-4 w-full justify-center">
               <a
                 role="tab"
                 className={`tab ${
@@ -136,7 +145,7 @@ export default function Seller() {
                 }`}
                 onClick={() => changeTab("products")}
               >
-                Products
+                All Products
               </a>
               <a
                 role="tab"
@@ -145,7 +154,7 @@ export default function Seller() {
                 }`}
                 onClick={() => changeTab("transactions")}
               >
-                Transaction
+                Transactions
               </a>
             </div>
 
@@ -195,9 +204,9 @@ export default function Seller() {
                                     <span className="sr-only">
                                       Regular Price
                                     </span>
-                                    <span className="tracking-wider text-gray-900">
+                                    {/* <span className="tracking-wider text-gray-900">
                                       ${item.price}
-                                    </span>
+                                    </span> */}
                                   </p>
                                 </div>
                               </a>

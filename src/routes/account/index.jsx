@@ -70,10 +70,20 @@ export default function Account() {
 
       <RouteProtection>
         <Container show_navbar_2={false}>
+          <div className="breadcrumbs text-sm">
+            <ul>
+              <li>
+                <a className="link text-primary" href="/">
+                  Home
+                </a>
+              </li>
+              <li>Account</li>
+            </ul>
+          </div>
           <Suspense fallback={<Spinner />}>
             <Switch>
               <Match when={user()}>
-                <div className="my-6">
+                <div className="my-2">
                   <Profile data={user()} refetch={refetch} />
                 </div>
               </Match>
