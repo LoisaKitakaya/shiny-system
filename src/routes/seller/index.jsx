@@ -25,7 +25,7 @@ const fetchSellerProducts = async () => {
     },
   };
 
-  const url = `${backendAPI}/api/v1/store/products`;
+  const url = `${backendAPI}/api/v1/store/products/seller`;
 
   try {
     const response = await fetch(url, options);
@@ -122,13 +122,18 @@ export default function Seller() {
             <div className="breadcrumbs text-sm">
               <ul>
                 <li>
-                  <a className="link text-primary" href="/">Home</a>
+                  <a className="link text-primary" href="/">
+                    Home
+                  </a>
                 </li>
                 <li>Seller Console</li>
               </ul>
             </div>
 
-            <div role="tablist" className="tabs tabs-sm tabs-box flex gap-4 w-full justify-center">
+            <div
+              role="tablist"
+              className="tabs tabs-sm tabs-box flex gap-4 w-full justify-center"
+            >
               <a
                 role="tab"
                 className={`tab ${
@@ -197,17 +202,9 @@ export default function Seller() {
                                   className="h-[300px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[400px]"
                                 />
                                 <div className="relative bg-white p-3">
-                                  <h3 className="text-xs text-gray-700 group-hover:underline group-hover:underline-offset-4">
+                                  <h3 className="group-hover:underline group-hover:underline-offset-4">
                                     {item.name}
                                   </h3>
-                                  <p className="mt-2">
-                                    <span className="sr-only">
-                                      Regular Price
-                                    </span>
-                                    {/* <span className="tracking-wider text-gray-900">
-                                      ${item.price}
-                                    </span> */}
-                                  </p>
                                 </div>
                               </a>
                             </div>

@@ -3,6 +3,7 @@
         "csrftoken",
         "daisyui",
         "prefersdark",
+        "productfilter",
         "solidjs"
     ]
 }

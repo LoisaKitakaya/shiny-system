@@ -24,12 +24,15 @@ import TermsAndConditions from "./routes/terms-and-conditions";
 import PrivacyPolicy from "./routes/privacy-policy";
 import Account from "./routes/account";
 import SellerProduct from "./routes/seller/product";
+import Filter from "./routes/filter";
 
 render(
   () => (
     <MetaProvider>
       <Router root={App}>
         <Route path="/" component={Home} />
+
+        <Route path="/filter" component={Filter} />
 
         <Route path="*404" component={NotFound} />
 
