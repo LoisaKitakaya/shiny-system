@@ -25,6 +25,7 @@ import PrivacyPolicy from "./routes/privacy-policy";
 import Account from "./routes/account";
 import SellerProduct from "./routes/seller/product";
 import Filter from "./routes/filter";
+import RequestPasswordReset from "./routes/auth/security/request-password-reset";
 
 render(
   () => (
@@ -48,10 +49,10 @@ render(
           <Route path="/sign-in" component={SingIn} />
           <Route path="/sign-up" component={SignUp} />
           <Route path="/create-account" component={CreateAccount} />
-          {/* <Route
+          <Route
             path="/security/request-password-reset"
             component={RequestPasswordReset}
-          /> */}
+          />
         </Route>
 
         <Route path="/seller">

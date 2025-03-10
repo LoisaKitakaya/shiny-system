@@ -1,11 +1,9 @@
 import toast from "solid-toast";
 import { createSignal } from "solid-js";
 import { backendAPI } from "../../../lib/utils/secrets";
-import image from "../../../assets/img/auth_image_2.jpg";
+import image from "../../../assets/img/auth_image.jpg";
 import MetaTitle from "../../../components/meta/meta-title";
 import { getErrorMessage } from "../../../lib/utils/responses";
-import logo from "../../../assets/logos/casaflex_dark_4_no_bg.png";
-import logo2 from "../../../assets/logos/casaflex_light_4_no_bg.png";
 import {
   loadingState,
   startLoading,
@@ -95,7 +93,13 @@ export default function RequestPasswordReset() {
             <div className="hidden lg:relative lg:block lg:p-12">
               <a className="block text-white" href="/">
                 <span className="sr-only">Home</span>
-                <img src={logo} alt="app logo" className="w-1/4" />
+                <img
+                  src={
+                    "https://i.pinimg.com/736x/3c/07/40/3c0740017fa1c2ca4b529179ef1ffb08.jpg"
+                  }
+                  alt="app logo"
+                  className="w-1/4"
+                />
               </a>
 
               <h2 className="text-2xl font-bold text-white sm:text-3xl md:text-4xl">
@@ -116,7 +120,13 @@ export default function RequestPasswordReset() {
                   href="/"
                 >
                   <span className="sr-only">Home</span>
-                  <img src={logo2} alt="app logo" className="w-full" />
+                  <img
+                    src={
+                      "https://i.pinimg.com/736x/3c/07/40/3c0740017fa1c2ca4b529179ef1ffb08.jpg"
+                    }
+                    alt="app logo"
+                    className="w-full"
+                  />
                 </a>
 
                 <h1 className="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
@@ -137,10 +147,7 @@ export default function RequestPasswordReset() {
                 className="mt-8 grid grid-cols-6 gap-6"
               >
                 <div className="col-span-6">
-                  <label
-                    htmlFor="Email"
-                    className="block text-sm font-medium "
-                  >
+                  <label htmlFor="Email" className="block text-sm font-medium ">
                     {" "}
                     Account Email{" "}
                   </label>
