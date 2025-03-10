@@ -1,9 +1,18 @@
 import { useLocation, useNavigate, useSearchParams } from "@solidjs/router";
-import { authState, logout, userInfo } from "../../../lib/store/auth_store";
-import { createResource, createSignal, For, Show } from "solid-js";
+import { authState, logout } from "../../../lib/store/auth_store";
 import Cookies from "js-cookie";
 import { backendAPI } from "../../../lib/utils/secrets";
 import { getErrorMessage } from "../../../lib/utils/responses";
+import { checkoutStore } from "../../../lib/store/checkout_store";
+import Cart from "../../checkout/cart";
+import {
+  createEffect,
+  createResource,
+  createSignal,
+  For,
+  Show,
+} from "solid-js";
+import { openModal } from "../../../lib/store/modal_store";
 
 const fetchProductCategories = async () => {
   const token = Cookies.get("session");
@@ -77,11 +86,19 @@ export default function Navbar(props) {
 
   const handleSubmit = (e) => {
     navigate(
-      `/filter?search=${searchParams.search}&category=${
+      `/filter?search=${searchParams.search || ""}&category=${
         searchParams.category || "all"
       }`
     );
   };
+
+  const openCart = () => {
+    openModal("Cart", <Cart />);
+  };
+
+  // createEffect(() => {
+  //   console.log(JSON.stringify(checkoutStore.state.items, null, 2));
+  // });
 
   return (
     <>
@@ -105,7 +122,7 @@ export default function Navbar(props) {
               type="text"
               placeholder="Search products..."
               className="input input-bordered join-item w-80"
-              value={searchInput()}
+              value={searchInput() || ""}
               onInput={handleSearch}
             />
             <select
@@ -169,9 +186,12 @@ export default function Navbar(props) {
           <Show when={!location.pathname.startsWith("/seller")}>
             <div className="indicator">
               <span className="indicator-item text-xs badge badge-neutral badge-xs rounded-2xl">
-                0
+                {checkoutStore.state.items.length}
               </span>
-              <button className="btn btn-circle btn-outline border-gray-100 hover:bg-gray-100">
+              <button
+                className="btn btn-circle btn-outline border-gray-100 hover:bg-gray-100"
+                onClick={openCart}
+              >
                 <i class="bi bi-bag text-2xl"></i>
               </button>
             </div>
