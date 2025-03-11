@@ -15,17 +15,10 @@ import {
 import { openModal } from "../../../lib/store/modal_store";
 
 const fetchProductCategories = async () => {
-  const token = Cookies.get("session");
-
-  if (!token) {
-    throw new Error("Session token is missing. Please log in.");
-  }
-
   const options = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
     },
   };
 
