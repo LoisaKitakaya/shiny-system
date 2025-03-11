@@ -26,16 +26,18 @@ import Account from "./routes/account";
 import SellerProduct from "./routes/seller/product";
 import Filter from "./routes/filter";
 import RequestPasswordReset from "./routes/auth/security/request-password-reset";
+import Store from "./routes/store";
+import Product from "./routes/store/product";
 
 render(
   () => (
     <MetaProvider>
       <Router root={App}>
+        <Route path="*404" component={NotFound} />
+
         <Route path="/" component={Home} />
 
         <Route path="/filter" component={Filter} />
-
-        <Route path="*404" component={NotFound} />
 
         <Route path="/terms-and-conditions" component={TermsAndConditions} />
 
@@ -58,6 +60,11 @@ render(
         <Route path="/seller">
           <Route path="/" component={Seller} />
           <Route path="/product/:product_id" component={SellerProduct} />
+        </Route>
+        
+        <Route path="/store">
+          <Route path="/:store_slug" component={Store} />
+          <Route path="/product/:product_id" component={Product} />
         </Route>
       </Router>
     </MetaProvider>

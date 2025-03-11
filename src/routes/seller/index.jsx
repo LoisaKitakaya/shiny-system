@@ -132,7 +132,7 @@ export default function Seller() {
 
             <div
               role="tablist"
-              className="tabs tabs-sm tabs-box flex gap-4 w-full justify-center"
+              className="tabs tabs-sm tabs-boxed flex gap-4 w-full justify-center"
             >
               <a
                 role="tab"

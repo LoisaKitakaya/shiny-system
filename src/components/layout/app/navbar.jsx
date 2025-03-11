@@ -102,7 +102,7 @@ export default function Navbar(props) {
 
   return (
     <>
-      <div className="navbar bg-base-100 w-full top-0 sticky z-50 shadow-2xs px-4">
+      <div className="navbar bg-base-100 w-full top-0 sticky z-50 shadow-xs px-4 border-b">
         <div className="navbar-start">
           <a
             href="/"
@@ -121,12 +121,12 @@ export default function Navbar(props) {
             <input
               type="text"
               placeholder="Search products..."
-              className="input input-bordered join-item w-80"
+              className="input input-sm input-bordered join-item w-80"
               value={searchInput() || ""}
               onInput={handleSearch}
             />
             <select
-              className="select select-bordered join-item w-32"
+              className="select select-sm select-bordered join-item w-32"
               value={searchParams.category || "all"}
               onChange={handleCategoryChange}
             >
@@ -138,7 +138,7 @@ export default function Navbar(props) {
               </For>
             </select>
             <Show when={!location.pathname.startsWith("/filter")}>
-              <button type="submit" className="btn btn-neutral join-item">
+              <button type="submit" className="btn btn-sm btn-neutral join-item">
                 Search
               </button>
             </Show>
@@ -149,13 +149,13 @@ export default function Navbar(props) {
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-circle btn-outline border-gray-100 hover:bg-gray-100"
+              className="btn btn-sm btn-circle btn-outline border-gray-100 hover:border-gray-100 hover:bg-gray-100"
             >
-              <i class="bi bi-person text-2xl"></i>
+              <i class="bi bi-person text-xl text-black"></i>
             </div>
             <ul
               tabIndex={0}
-              className="dropdown-content menu bg-base-100 rounded-box z-1 w-40 p-2 shadow-sm"
+              className="dropdown-content menu bg-base-100 border border-gray-100 rounded-box z-1 w-40 p-2 shadow-sm"
             >
               <li>
                 <a href="/favorites">Favorites</a>
@@ -185,14 +185,14 @@ export default function Navbar(props) {
           </div>
           <Show when={!location.pathname.startsWith("/seller")}>
             <div className="indicator">
-              <span className="indicator-item text-xs badge badge-neutral badge-xs rounded-2xl">
+              <span className="indicator-item text-xs badge badge-neutral badge-xs rounded-2xl font-semibold">
                 {checkoutStore.state.items.length}
               </span>
               <button
-                className="btn btn-circle btn-outline border-gray-100 hover:bg-gray-100"
+                className="btn btn-sm btn-circle btn-outline border-gray-100 hover:border-gray-100 hover:bg-gray-100"
                 onClick={openCart}
               >
-                <i class="bi bi-bag text-2xl"></i>
+                <i class="bi bi-bag text-xl text-black"></i>
               </button>
             </div>
           </Show>

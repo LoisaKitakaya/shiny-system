@@ -1,24 +1,23 @@
+import { useParams } from "@solidjs/router";
+import RouteProtection from "../../components/auth/route_protection";
+import Container from "../../components/layout/app/container";
+import MetaTitle from "../../components/meta/meta-title";
 import Cookies from "js-cookie";
-import Container from "../components/layout/app/container";
-import { backendAPI } from "../lib/utils/secrets";
-import { getErrorMessage } from "../lib/utils/responses";
-import MetaTitle from "../components/meta/meta-title";
+import { backendAPI } from "../../lib/utils/secrets";
+import { getErrorMessage } from "../../lib/utils/responses";
 import {
   createEffect,
   createResource,
-  createSignal,
   For,
   Match,
   Suspense,
   Switch,
 } from "solid-js";
-import Spinner from "../components/layout/spinner";
-import { useSearchParams } from "@solidjs/router";
-import { favoritesStore } from "../lib/store/favorite_store";
-import { checkoutStore } from "../lib/store/checkout_store";
-import ProductCard from "../components/products/product_card";
+import Spinner from "../../components/layout/spinner";
+import Error from "../../components/layout/error";
+import ProductCard from "../../components/products/product_card";
 
-const fetchFilteredProducts = async ({ search, category, page }) => {
+const fetchStore = async (store_slug) => {
   const token = Cookies.get("session");
 
   if (!token) {
@@ -33,13 +32,7 @@ const fetchFilteredProducts = async ({ search, category, page }) => {
     },
   };
 
-  const params = new URLSearchParams();
-
-  if (search) params.append("search", search);
-  if (category !== "all") params.append("category", category);
-  if (page) params.append("page", page);
-
-  const url = `${backendAPI}/api/v1/store/products/filter?${params}`;
+  const url = `${backendAPI}/api/v1/store/products/store/${store_slug}`;
 
   try {
     const response = await fetch(url, options);
@@ -63,27 +56,21 @@ const fetchFilteredProducts = async ({ search, category, page }) => {
   }
 };
 
-export default function Filter() {
-  const [searchParams] = useSearchParams();
+export default function Store() {
+  const params = useParams();
 
-  const [products] = createResource(
-    () => ({
-      search: searchParams.search,
-      category: searchParams.category || "all",
-    }),
-    fetchFilteredProducts
-  );
+  const [store] = createResource(params.store_slug, fetchStore);
 
-  // createEffect(() => {
-  //   console.log(products())
-  // })
+  //   createEffect(() => {
+  //     console.log(store());
+  //   });
 
   return (
     <>
-      <MetaTitle title="Filter" />
+      <MetaTitle title="Store" />
 
-      <Container show_navbar_2={false}>
-        <Suspense fallback={<Spinner />}>
+      <RouteProtection>
+        <Container show_navbar_2={false}>
           <div className="breadcrumbs text-sm">
             <ul>
               <li>
@@ -91,16 +78,52 @@ export default function Filter() {
                   Home
                 </a>
               </li>
-              <li>Filter Result</li>
+              <li>{params.store_slug}</li>
             </ul>
           </div>
 
-          <Switch>
-            <Match when={products()}>
-              <Switch>
-                <Match when={products() && products().results.length > 0}>
+          <Suspense fallback={<Spinner />}>
+            <Switch>
+              <Match when={store()}>
+                <div className="my-4">
+                  <div className="relative">
+                    <img
+                      src={store().artist.banner_image}
+                      className="h-80 w-full"
+                    />
+                    <div className="flex items-center gap-2 absolute top-20 left-16">
+                      <div className="card p-0 bg-base-100 flex flex-row justify-start gap-2">
+                        <div className="avatar">
+                          <div className="w-24 rounded">
+                            <img src={store().artist.user.profile_picture} />
+                          </div>
+                        </div>
+
+                        <div className="card-body gap-0">
+                          <p className="text-sm">
+                            <strong>Username:</strong>{" "}
+                            {store().artist.user.username}
+                          </p>
+                          <p className="text-sm">
+                            <strong>Email:</strong> {store().artist.user.email}
+                          </p>
+                          <p className="text-sm">
+                            <strong>Name:</strong>{" "}
+                            {store().artist.user.first_name}{" "}
+                            {store().artist.user.first_name}
+                          </p>
+                          <p className="text-sm">
+                            <strong>Store:</strong> {store().artist.store_name}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* <div className="divider m-0 p-0" /> */}
+
                   <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mt-4 w-full mx-auto">
-                    <For each={products().results}>
+                    <For each={store().products}>
                       {(item) => (
                         <div
                           key={item.id}
@@ -140,18 +163,6 @@ export default function Filter() {
                                   ${item.price}
                                 </p>
                               </div>
-
-                              <div>
-                                <p class="text-sm">
-                                  Store:{" "}
-                                  <a
-                                    href={`/store/${item.artist.slug}`}
-                                    className="link link-hover text-primary"
-                                  >
-                                    {item.artist.store_name}
-                                  </a>
-                                </p>
-                              </div>
                             </div>
                           </div>
 
@@ -162,22 +173,15 @@ export default function Filter() {
                       )}
                     </For>
                   </div>
-                </Match>
-                <Match when={products() && products().results.length === 0}>
-                  <div className="flex flex-col items-center gap-4">
-                    <span className="text-2xl font-semibold text-center mt-40">
-                      Product Query Not Found
-                    </span>
-                  </div>
-                </Match>
-              </Switch>
-            </Match>
-            <Match when={!products()}>
-              <Error />
-            </Match>
-          </Switch>
-        </Suspense>
-      </Container>
+                </div>
+              </Match>
+              <Match when={!store()}>
+                <Error />
+              </Match>
+            </Switch>
+          </Suspense>
+        </Container>
+      </RouteProtection>
     </>
   );
 }

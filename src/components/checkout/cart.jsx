@@ -24,7 +24,10 @@ export default function Cart(props) {
                         <div class="text-sm text-base-content/80">
                           <p>
                             Store:{" "}
-                            <a href="" className="link link-hover text-primary">
+                            <a
+                              href={`/store/${item.product.artist.slug}`}
+                              className="link link-hover text-primary"
+                            >
                               {item.product.artist.store_name}
                             </a>
                           </p>
@@ -105,7 +108,7 @@ export default function Cart(props) {
                       <span>Total</span>
                       <span>${checkoutStore.totalPrice}</span>
                     </div>
-                    
+
                     <button
                       class="btn btn-primary w-full"
                       onClick={checkoutStore.createOrder}

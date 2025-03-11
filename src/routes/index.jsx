@@ -71,9 +71,9 @@ export default function Home() {
                   {(item) => (
                     <div
                       key={item.id}
-                      className="group block overflow-hidden rounded hover:rounded-lg shadow-sm hover:shadow-lg transition duration-300"
+                      className="group block overflow-hidden rounded hover:rounded-lg shadow-sm hover:shadow-lg transition duration-300 border border-gray-100"
                     >
-                      <a href={`/product/${item.id}`}>
+                      <a href={`/store/product/${item.id}`}>
                         <img
                           src={
                             item.image ||
@@ -110,9 +110,9 @@ export default function Home() {
 
                           <div>
                             <p class="text-sm">
-                              more from:{" "}
+                              Store:{" "}
                               <a
-                                href=""
+                                href={`/store/${item.artist.slug}`}
                                 className="link link-hover text-primary"
                               >
                                 {item.artist.store_name}
