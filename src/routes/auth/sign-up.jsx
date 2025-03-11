@@ -139,50 +139,12 @@ export default function SignUp() {
                 </p>
               </div>
 
-              <h2 className="font-semibold text-lg mt-8 lg:mt-8">
-                Register
-              </h2>
+              <h2 className="font-semibold text-lg mt-8 lg:mt-8">Register Account</h2>
 
               <form
                 onSubmit={handleSubmit}
                 className="mt-8 grid grid-cols-6 gap-6"
               >
-                {/* <div className="col-span-6 sm:col-span-3">
-                  <label
-                    htmlFor="FirstName"
-                    className="block text-sm font-medium "
-                  >
-                    First Name
-                  </label>
-
-                  <input
-                    type="text"
-                    id="FirstName"
-                    name="firstName"
-                    onInput={handleChange}
-                    value={formData().firstName}
-                    className="mt-1 input input-md input-bordered w-full text-sm shadow-sm"
-                  />
-                </div>
-
-                <div className="col-span-6 sm:col-span-3">
-                  <label
-                    htmlFor="LastName"
-                    className="block text-sm font-medium "
-                  >
-                    Last Name
-                  </label>
-
-                  <input
-                    type="text"
-                    id="LastName"
-                    name="lastName"
-                    onInput={handleChange}
-                    value={formData().lastName}
-                    className="mt-1 input input-md input-bordered w-full text-sm shadow-sm"
-                  />
-                </div> */}
-
                 <div className="col-span-6">
                   <p className="text-sm text-gray-500">
                     A link to create a new account will be sent to your email
@@ -193,7 +155,10 @@ export default function SignUp() {
                 <div className="col-span-6">
                   <label htmlFor="Email" className="block text-sm font-medium ">
                     {" "}
-                    Email{" "} <sup><span className="text-error">*</span></sup>
+                    Email{" "}
+                    <sup>
+                      <span className="text-error">*</span>
+                    </sup>
                   </label>
 
                   <input
@@ -205,22 +170,6 @@ export default function SignUp() {
                     className="mt-1 input input-md input-bordered w-full text-sm shadow-sm"
                   />
                 </div>
-
-                {/* <div className="col-span-6 sm:col-span-3">
-                  <label htmlFor="Phone" className="block text-sm font-medium ">
-                    {" "}
-                    Phone{" "}
-                  </label>
-
-                  <input
-                    type="text"
-                    id="Phone"
-                    name="phone"
-                    onInput={handleChange}
-                    value={formData().phone}
-                    className="mt-1 input input-md input-bordered w-full text-sm shadow-sm"
-                  />
-                </div> */}
 
                 <div className="col-span-6">
                   <p className="text-sm text-gray-500">

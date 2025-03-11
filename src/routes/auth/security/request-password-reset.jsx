@@ -138,28 +138,60 @@ export default function RequestPasswordReset() {
                 </p>
               </div>
 
-              <h2 className="font-semibold text-lg mt-8 lg:mt-8">
-                Request Password Reset
-              </h2>
+              <h2 className="font-semibold text-lg mt-8 lg:mt-8">Password Reset</h2>
 
               <form
                 onSubmit={handleSubmit}
                 className="mt-8 grid grid-cols-6 gap-6"
               >
                 <div className="col-span-6">
+                  <p className="text-sm text-gray-500">
+                    A link to reset your account will be sent to your email
+                    address.
+                  </p>
+                </div>
+
+                <div className="col-span-6">
                   <label htmlFor="Email" className="block text-sm font-medium ">
                     {" "}
-                    Account Email{" "}
+                    Email{" "}
+                    <sup>
+                      <span className="text-error">*</span>
+                    </sup>
                   </label>
 
                   <input
                     type="email"
                     id="Email"
                     name="email"
-                    value={formData().email}
                     onInput={handleChange}
+                    value={formData().email}
                     className="mt-1 input input-md input-bordered w-full text-sm shadow-sm"
                   />
+                </div>
+
+                <div className="col-span-6">
+                  <p className="text-sm text-gray-500">
+                    Your personal data will be used to support your experience
+                    throughout this website, to manage access to your account,
+                    and for other purposes described in our{" "}
+                    <a
+                      href="/privacy-policy"
+                      target="blank"
+                      className=" underline"
+                    >
+                      privacy policy
+                    </a>
+                    and{" "}
+                    <a
+                      href="/terms-and-conditions"
+                      target="blank"
+                      className=" underline"
+                    >
+                      terms and conditions
+                    </a>{" "}
+                    and .
+                  </p>
                 </div>
 
                 <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
@@ -177,6 +209,16 @@ export default function RequestPasswordReset() {
                       </Match>
                     </Switch>
                   </button>
+                </div>
+
+                <div className="col-span-6">
+                  <p className="text-sm text-center text-gray-500 sm:mt-0">
+                    Already have an account?{" "}
+                    <a href="/auth/sign-in" className=" underline">
+                      Log in
+                    </a>
+                    .
+                  </p>
                 </div>
               </form>
             </div>

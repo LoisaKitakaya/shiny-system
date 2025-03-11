@@ -5,11 +5,14 @@ import Modal from "./components/layout/modal/modal";
 import { loadingState } from "./lib/store/loading_store";
 import { favoritesStore } from "./lib/store/favorite_store";
 import { checkoutStore } from "./lib/store/checkout_store";
+import { authState } from "./lib/store/auth_store";
 
 const App = (props) => {
   onMount(() => {
-    favoritesStore.syncWithServer();
-    checkoutStore.syncWithLocalStorage();
+    if (authState.isAuthenticated) {
+      favoritesStore.syncWithServer();
+      checkoutStore.syncWithLocalStorage();
+    }
   });
 
   return (
