@@ -5,6 +5,9 @@ import MetaTitle from "../../components/meta/meta-title";
 import Cookies from "js-cookie";
 import { backendAPI } from "../../lib/utils/secrets";
 import { getErrorMessage } from "../../lib/utils/responses";
+import Spinner from "../../components/layout/spinner";
+import Error from "../../components/layout/error";
+import ProductCard from "../../components/products/product_card";
 import {
   createEffect,
   createResource,
@@ -13,22 +16,12 @@ import {
   Suspense,
   Switch,
 } from "solid-js";
-import Spinner from "../../components/layout/spinner";
-import Error from "../../components/layout/error";
-import ProductCard from "../../components/products/product_card";
 
 const fetchStore = async (store_slug) => {
-  const token = Cookies.get("session");
-
-  if (!token) {
-    throw new Error("Session token is missing. Please log in.");
-  }
-
   const options = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
     },
   };
 

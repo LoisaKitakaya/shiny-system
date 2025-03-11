@@ -3,6 +3,9 @@ import Container from "../components/layout/app/container";
 import { backendAPI } from "../lib/utils/secrets";
 import { getErrorMessage } from "../lib/utils/responses";
 import MetaTitle from "../components/meta/meta-title";
+import Spinner from "../components/layout/spinner";
+import { useSearchParams } from "@solidjs/router";
+import ProductCard from "../components/products/product_card";
 import {
   createEffect,
   createResource,
@@ -12,24 +15,12 @@ import {
   Suspense,
   Switch,
 } from "solid-js";
-import Spinner from "../components/layout/spinner";
-import { useSearchParams } from "@solidjs/router";
-import { favoritesStore } from "../lib/store/favorite_store";
-import { checkoutStore } from "../lib/store/checkout_store";
-import ProductCard from "../components/products/product_card";
 
 const fetchFilteredProducts = async ({ search, category, page }) => {
-  const token = Cookies.get("session");
-
-  if (!token) {
-    throw new Error("Session token is missing. Please log in.");
-  }
-
   const options = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
     },
   };
 
