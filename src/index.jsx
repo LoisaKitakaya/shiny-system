@@ -28,6 +28,7 @@ import Filter from "./routes/filter";
 import RequestPasswordReset from "./routes/auth/security/request-password-reset";
 import Store from "./routes/store";
 import Product from "./routes/store/product";
+import Favorites from "./routes/favorites";
 
 render(
   () => (
@@ -38,6 +39,8 @@ render(
         <Route path="/" component={Home} />
 
         <Route path="/filter" component={Filter} />
+
+        <Route path="/favorites" component={Favorites} />
 
         <Route path="/terms-and-conditions" component={TermsAndConditions} />
 

@@ -33,14 +33,20 @@ export const createFavoritesStore = () => {
         setFavorites({ items: serverFavorites.map((f) => f.product.id) });
       }
     } catch (error) {
-      toast.error(`Failed to sync favorites: ${error.message}`);
+      // toast.error(`Failed to sync favorites: ${error.message}`);
+      new Error(`Failed to sync favorites: ${error.message}`);
     }
   };
 
   const toggleFavorite = async (productId) => {
     try {
       const token = Cookies.get("session");
-      if (!token) throw new Error("Please log in to manage favorites");
+
+      if (!token) {
+        toast.error("Please log in to manage favorites");
+
+        return;
+      }
 
       const isFavorite = favorites.items.includes(productId);
       const previousItems = [...favorites.items]; // Store previous state

@@ -131,7 +131,10 @@ export default function Navbar(props) {
               </For>
             </select>
             <Show when={!location.pathname.startsWith("/filter")}>
-              <button type="submit" className="btn btn-sm btn-neutral join-item">
+              <button
+                type="submit"
+                className="btn btn-sm btn-neutral join-item"
+              >
                 Search
               </button>
             </Show>

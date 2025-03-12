@@ -73,7 +73,9 @@ export const createCheckoutStore = () => {
       const token = Cookies.get("session");
 
       if (!token) {
-        throw new Error("Session token is missing. Please log in.");
+        toast.error("Please log in to complete checkout");
+
+        return;
       }
 
       const options = {
@@ -110,6 +112,14 @@ export const createCheckoutStore = () => {
   };
 
   const processPayment = async (orderId) => {
+    const token = Cookies.get("session");
+
+    if (!token) {
+      toast.error("Please log in to complete checkout");
+
+      return;
+    }
+
     return new Promise((resolve) => {
       setTimeout(() => resolve({ success: true }), 1000);
     });

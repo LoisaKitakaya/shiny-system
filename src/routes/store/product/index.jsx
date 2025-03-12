@@ -51,85 +51,82 @@ export default function Product() {
     <>
       <MetaTitle title="Product" />
 
-      <RouteProtection>
-        <Container show_navbar_2={false}>
-          <div className="breadcrumbs text-sm">
-            <ul>
-              <li>
-                <a className="link text-primary" href="/">
-                  Home
-                </a>
-              </li>
-              <li>{params.product_id}</li>
-            </ul>
-          </div>
+      <Container show_navbar_2={false}>
+        <div className="breadcrumbs text-sm">
+          <ul>
+            <li>
+              <a className="link text-primary" href="/">
+                Home
+              </a>
+            </li>
+            <li>{params.product_id}</li>
+          </ul>
+        </div>
 
-          <Suspense fallback={<Spinner />}>
-            <Switch>
-              <Match when={product()}>
-                <div className="my-4">
-                  <div class="card card-side bg-base-100 shadow-xs border border-gray-50 mb-6">
-                    <figure class="w-1/2">
-                      <img
-                        src={product().image || "/placeholder-product.jpg"}
-                        alt={product().name}
-                        class="h-full object-cover"
-                      />
-                    </figure>
-                    <div class="card-body">
-                      <div className="flex flex-col justify-between h-full">
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <h2 class="card-title">{product().name}</h2>
+        <Suspense fallback={<Spinner />}>
+          <Switch>
+            <Match when={product()}>
+              <div className="my-4">
+                <div class="card card-side bg-base-100 shadow-xs border border-gray-50 mb-6">
+                  <figure class="w-1/2">
+                    <img
+                      src={product().image || "/placeholder-product.jpg"}
+                      alt={product().name}
+                      class="h-full object-cover"
+                    />
+                  </figure>
+                  <div class="card-body">
+                    <div className="flex flex-col justify-between h-full">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <h2 class="card-title">{product().name}</h2>
 
-                            {product().stock > 0 ? (
-                              <span className="badge badge-xs badge-success">
-                                In Stock
-                              </span>
-                            ) : (
-                              <span className="badge badge-xs badge-error">
-                                Out of Stock
-                              </span>
-                            )}
-                          </div>
-                          <p>
-                            Store:{" "}
-                            <a
-                              href={`/store/${product().artist.slug}`}
-                              className="link link-hover text-primary"
-                            >
-                              {product().artist.store_name}
-                            </a>
-                          </p>
-                          <p>
-                            Artist: {product().artist.user.username}
-                          </p>
+                          {product().stock > 0 ? (
+                            <span className="badge badge-xs badge-success">
+                              In Stock
+                            </span>
+                          ) : (
+                            <span className="badge badge-xs badge-error">
+                              Out of Stock
+                            </span>
+                          )}
                         </div>
-                        <div class="card-actions justify-start items-center">
-                          <ProductCard item={product()} />
-                        </div>
+                        <p>
+                          Store:{" "}
+                          <a
+                            href={`/store/${product().artist.slug}`}
+                            className="link link-hover text-primary"
+                          >
+                            {product().artist.store_name}
+                          </a>
+                        </p>
+                        <p>Artist: {product().artist.user.username}</p>
+                        <p>Category: {product().category.name}</p>
+                      </div>
+                      <div class="card-actions justify-start items-center">
+                        <ProductCard item={product()} />
                       </div>
                     </div>
                   </div>
+                </div>
 
-                  <div class="card card-side bg-base-100 shadow-xs border border-gray-50 mb-6">
-                    <div className="card-body">
-                      <h2 className="card-title">Product Description</h2>
+                <div class="card card-side bg-base-100 shadow-xs border border-gray-50 mb-6">
+                  <div className="card-body">
+                    <h2 className="card-title">Product Description</h2>
 
-                      <div className="divider p-0 m-0"></div>
+                    <div className="divider p-0 m-0"></div>
 
-                      <p>{product().description}</p>
-                    </div>
+                    <p>{product().description}</p>
                   </div>
                 </div>
-              </Match>
-              <Match when={!product()}>
-                <Error />
-              </Match>
-            </Switch>
-          </Suspense>
-        </Container>
-      </RouteProtection>
+              </div>
+            </Match>
+            <Match when={!product()}>
+              <Error />
+            </Match>
+          </Switch>
+        </Suspense>
+      </Container>
     </>
   );
 }
