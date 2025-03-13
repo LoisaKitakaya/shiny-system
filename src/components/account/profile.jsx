@@ -187,12 +187,13 @@ export default function Profile(props) {
     store_name: null,
     about: null,
     file: null,
+    stripe_secret_key: null,
   });
 
   createEffect(() => {
     setData(props.data);
 
-    console.log(data());
+    // console.log(data());
   }, props.data);
 
   const handleChange = (e) => {
@@ -261,10 +262,15 @@ export default function Profile(props) {
     startLoading();
 
     try {
-      if (formData().store_name || formData().about) {
+      if (
+        formData().store_name ||
+        formData().about ||
+        formData().stripe_secret_key
+      ) {
         const result = await updateStore({
           store_name: formData().store_name,
           about: formData().about,
+          stripe_secret_key: formData().stripe_secret_key,
         });
 
         if (result.status && result.status >= 400) {
@@ -295,7 +301,7 @@ export default function Profile(props) {
       const appForm = new FormData();
 
       appForm.append("file", formData().file);
-    //   appForm.append("data", JSON.stringify({}));
+      //   appForm.append("data", JSON.stringify({}));
 
       const result = await profilePic(appForm);
 
@@ -324,7 +330,7 @@ export default function Profile(props) {
       const appForm = new FormData();
 
       appForm.append("file", formData().file);
-    //   appForm.append("data", JSON.stringify({}));
+      //   appForm.append("data", JSON.stringify({}));
 
       const result = await bannerPic(appForm);
 
@@ -349,6 +355,12 @@ export default function Profile(props) {
       "Create Store (Artist Account)",
       <CreateStore refetch={props.refetch} />
     );
+  };
+
+  const [isPasswordVisible, setPasswordVisible] = createSignal(false);
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!isPasswordVisible());
   };
 
   return (
@@ -418,7 +430,7 @@ export default function Profile(props) {
 
           <div className="divider p-0 m-0" />
 
-          <form onSubmit={handleUpdateProfilePic}>
+          <form onSubmit={handleUpdateProfile}>
             <div className="grid grid-cols-6 gap-6 mb-4">
               <div className="col-span-6 sm:col-span-3">
                 <label
@@ -504,7 +516,7 @@ export default function Profile(props) {
                   Date Joined{" "}
                 </label>
 
-                <div className="mt-1 input input-md input-bordered w-full text-sm shadow-sm">
+                <div className="mt-1 input input-md input-bordered w-full text-sm shadow-sm pt-3">
                   {moment(
                     data()?.date_joined || data()?.user?.date_joined || ""
                   ).format("MMMM Do YYYY")}
@@ -651,6 +663,44 @@ export default function Profile(props) {
                   ></textarea>
                 </div>
               </div>
+
+              <div className="col-span-6 sm:col-span-3">
+                <label
+                  htmlFor="StripeSecretKey"
+                  className="block text-sm font-medium "
+                >
+                  Stripe Secret Key
+                </label>
+
+                <input
+                  type={!isPasswordVisible() ? "password" : "text"}
+                  id="StripeSecretKey"
+                  name="stripe_secret_key"
+                  placeholder="Stripe Secret Key"
+                  onInput={handleChange}
+                  value={
+                    data().stripe_secret_key === null
+                      ? ""
+                      : data().stripe_secret_key
+                  }
+                  className="mt-1 input input-md input-bordered w-full text-sm shadow-sm"
+                />
+              </div>
+
+              <label
+                htmlFor="MarketingAccept"
+                className="flex items-center gap-2 mt-2"
+              >
+                <input
+                  type="checkbox"
+                  id="ShowPassword"
+                  name="showPassword"
+                  onChange={togglePasswordVisibility}
+                  className="checkbox"
+                />
+
+                <span className="text-sm ">Show Secret Key</span>
+              </label>
 
               <div className="card-actions justify-end">
                 <button
