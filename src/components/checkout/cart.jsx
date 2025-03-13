@@ -1,4 +1,5 @@
 import { checkoutStore } from "../../lib/store/checkout_store";
+import { loadingState } from "../../lib/store/loading_store";
 
 export default function Cart(props) {
   return (
@@ -112,9 +113,19 @@ export default function Cart(props) {
                     <button
                       class="btn btn-primary w-full"
                       onClick={checkoutStore.createOrder}
-                      disabled={checkoutStore.state.items.length === 0}
+                      disabled={
+                        checkoutStore.state.items.length === 0 ||
+                        loadingState.isLoading
+                      }
                     >
-                      Proceed to Checkout
+                      <Switch>
+                        <Match when={!loadingState.isLoading}>
+                          <span>Proceed to Checkout</span>
+                        </Match>
+                        <Match when={loadingState.isLoading}>
+                          <span className="loading loading-bars loading-sm"></span>
+                        </Match>
+                      </Switch>
                     </button>
                   </div>
                 </div>

@@ -4,6 +4,7 @@ import toast from "solid-toast";
 import { createStore } from "solid-js/store";
 import { backendAPI } from "../utils/secrets";
 import { startLoading, stopLoading } from "./loading_store";
+import { closeModal } from "./modal_store";
 
 // Checkout Store
 export const createCheckoutStore = () => {
@@ -93,18 +94,28 @@ export const createCheckoutStore = () => {
         }),
       };
 
-      const url = `${backendAPI}/api/v1/store/orders`;
+      const url = `${backendAPI}/api/v1/orders/create-order`;
+
       const response = await fetch(url, options);
 
       if (!response.ok) throw new Error("Order creation failed");
 
       const orderData = await response.json();
-      await processPayment(orderData.id);
+
       cartActions.clearCart();
 
-      return orderData;
+      const newTab = window.open(orderData.payment_url, "_blank");
+      
+      if (newTab) {
+        newTab.focus(); // Ensure the new tab is brought into focus
+      } else {
+        alert("Popup blocked! Please allow popups for this site.");
+      }
+
+      closeModal();
     } catch (error) {
       setState({ error: error.message });
+
       toast.error(`Order creation failed: ${error.message}`);
     } finally {
       stopLoading();
