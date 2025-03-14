@@ -33,7 +33,7 @@ export default function Container(props) {
         </div>
       </Show>
 
-      <div className="min-h-screen py-2 px-4">{props.children}</div>
+      <div className="min-h-screen py-2 px-4 mb-12">{props.children}</div>
 
       <Footer />
     </>

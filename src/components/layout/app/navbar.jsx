@@ -1,5 +1,5 @@
 import { useLocation, useNavigate, useSearchParams } from "@solidjs/router";
-import { authState, logout } from "../../../lib/store/auth_store";
+import { authState, logout, userInfo } from "../../../lib/store/auth_store";
 import Cookies from "js-cookie";
 import { backendAPI } from "../../../lib/utils/secrets";
 import { getErrorMessage } from "../../../lib/utils/responses";
@@ -153,15 +153,22 @@ export default function Navbar(props) {
               tabIndex={0}
               className="dropdown-content menu bg-base-100 border border-gray-100 rounded-box z-1 w-40 p-2 shadow-sm"
             >
-              <li>
-                <a href="/favorites">Favorites</a>
-              </li>
               <Show when={!location.pathname.startsWith("/account")}>
                 <li>
                   <a href="/account">Account</a>
                 </li>
               </Show>
-              <Show when={!location.pathname.startsWith("/seller")}>
+              <Show when={userInfo.is_artist === "No"}>
+                <li>
+                  <a href="/favorites-orders">Favorites/Orders</a>
+                </li>
+              </Show>
+              <Show
+                when={
+                  !location.pathname.startsWith("/seller") &&
+                  userInfo.is_artist === "Yes"
+                }
+              >
                 <li>
                   <a href="/seller">Seller Console</a>
                 </li>
