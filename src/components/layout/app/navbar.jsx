@@ -186,7 +186,12 @@ export default function Navbar(props) {
               </Show>
             </ul>
           </div>
-          <Show when={!location.pathname.startsWith("/seller")}>
+          <Show
+            when={
+              !location.pathname.startsWith("/seller") &&
+              userInfo.is_artist === "No"
+            }
+          >
             <div className="indicator">
               <span className="indicator-item text-xs badge badge-neutral badge-xs rounded-2xl font-semibold">
                 {checkoutStore.state.items.length}
