@@ -3,6 +3,7 @@ import { render } from "solid-js/web";
 import { Router, Route } from "@solidjs/router";
 
 import "./index.css";
+import "quill/dist/quill.snow.css"; // Choose "bubble" or "core" for different themes
 
 const root = document.getElementById("root");
 

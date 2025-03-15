@@ -24,6 +24,7 @@ import {
 } from "../../../lib/store/loading_store";
 import { closeModal, openModal } from "../../../lib/store/modal_store";
 import Spinner from "../../../components/layout/spinner";
+import Editor from "../../../components/richtext/editor";
 
 const updateProduct = async (product_id, data) => {
   const token = Cookies.get("session");
@@ -483,14 +484,16 @@ export default function SellerProduct() {
                                 Product Description{" "}
                               </label>
 
-                              <textarea
-                                id="ProductDescription"
-                                name="description"
-                                placeholder="Product Description"
-                                onInput={handleChange}
-                                value={sellerProduct().description}
-                                className="mt-1 textarea textarea-md textarea-bordered w-full text-sm shadow-sm"
-                              ></textarea>
+                              <Editor
+                                value={sellerProduct().description || ""}
+                                onUpdate={(html) =>
+                                  setFormData((prev) => ({
+                                    ...prev,
+                                    description: html,
+                                  }))
+                                }
+                                placeholder="Product description..."
+                              />
                             </div>
                           </div>
 

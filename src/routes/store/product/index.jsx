@@ -116,7 +116,12 @@ export default function Product() {
 
                     <div className="divider p-0 m-0"></div>
 
-                    <p>{product().description}</p>
+                    <div class="ql-snow">
+                      <div
+                        class="ql-editor"
+                        innerHTML={product().description}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

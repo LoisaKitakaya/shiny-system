@@ -13,6 +13,7 @@ import {
   startLoading,
   stopLoading,
 } from "../../lib/store/loading_store";
+import Editor from "../richtext/editor";
 
 const updateProfile = async (data) => {
   const token = Cookies.get("session");
@@ -546,14 +547,13 @@ export default function Profile(props) {
                   Bio{" "}
                 </label>
 
-                <textarea
-                  id="Bio"
-                  name="bio"
-                  placeholder="Bio"
-                  onInput={handleChange}
+                <Editor
                   value={data()?.bio || data()?.user?.bio || ""}
-                  className="mt-1 textarea textarea-md textarea-bordered w-full text-sm shadow-sm"
-                ></textarea>
+                  onUpdate={(html) =>
+                    setFormData((prev) => ({ ...prev, bio: html }))
+                  }
+                  placeholder="Enter your bio..."
+                />
               </div>
             </div>
 
@@ -653,14 +653,13 @@ export default function Profile(props) {
                     About{" "}
                   </label>
 
-                  <textarea
-                    id="About"
-                    name="about"
-                    placeholder="About"
-                    onInput={handleChange}
-                    value={data()?.about || ""}
-                    className="mt-1 textarea textarea-md textarea-bordered w-full text-sm shadow-sm"
-                  ></textarea>
+                  <Editor
+                    value={data()?.about || data()?.user?.about || ""}
+                    onUpdate={(html) =>
+                      setFormData((prev) => ({ ...prev, about: html }))
+                    }
+                    placeholder="About your shop..."
+                  />
                 </div>
               </div>
 
