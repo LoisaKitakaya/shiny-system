@@ -1,5 +1,7 @@
+import { Show } from "solid-js";
 import { checkoutStore } from "../../lib/store/checkout_store";
 import { favoritesStore } from "../../lib/store/favorite_store";
+import { userInfo } from "../../lib/store/auth_store";
 
 // Revised product card implementation
 export default function ProductCard(props) {
@@ -12,6 +14,7 @@ export default function ProductCard(props) {
   const handleRemove = () => checkoutStore.removeItem(item.id);
 
   return (
+    <Show when={userInfo.is_artist === "No"}>
       <div className="flex gap-4 items-center p-3">
         <div className="flex items-center gap-2">
           <button
@@ -56,5 +59,6 @@ export default function ProductCard(props) {
           </Switch>
         </button>
       </div>
+    </Show>
   );
 }

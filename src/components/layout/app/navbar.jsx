@@ -92,11 +92,11 @@ export default function Navbar(props) {
   const openSearch = () => {
     openModal(
       "Search",
-      <form onSubmit={handleSubmit} className="join w-1/3 mx-auto">
+      <form onSubmit={handleSubmit} className="join">
         <input
           type="text"
           placeholder="Search products..."
-          className="input input-sm input-bordered join-item w-80"
+          className="input input-sm input-bordered join-item w-48"
           value={searchInput() || ""}
           onInput={handleSearch}
         />

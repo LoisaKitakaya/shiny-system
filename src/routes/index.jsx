@@ -53,7 +53,7 @@ export default function Home() {
     <>
       <MetaTitle title="Home" />
 
-      <Container show_navbar_2={true}>
+      <Container show_navbar_2={false}>
         <Suspense fallback={<Spinner />}>
           <Switch>
             <Match when={products()}>
