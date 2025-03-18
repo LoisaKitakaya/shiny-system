@@ -89,6 +89,38 @@ export default function Navbar(props) {
     openModal("Cart", <Cart />);
   };
 
+  const openSearch = () => {
+    openModal(
+      "Search",
+      <form onSubmit={handleSubmit} className="join w-1/3 mx-auto">
+        <input
+          type="text"
+          placeholder="Search products..."
+          className="input input-sm input-bordered join-item w-80"
+          value={searchInput() || ""}
+          onInput={handleSearch}
+        />
+        <select
+          className="select select-sm select-bordered join-item w-32"
+          value={searchParams.category || "all"}
+          onChange={handleCategoryChange}
+        >
+          <option value="all">All Categories</option>
+          <For each={productCategories()}>
+            {(category) => (
+              <option value={category.slug}>{category.name}</option>
+            )}
+          </For>
+        </select>
+        <Show when={!location.pathname.startsWith("/filter")}>
+          <button type="submit" className="btn btn-sm btn-neutral join-item">
+            Search
+          </button>
+        </Show>
+      </form>
+    );
+  };
+
   // createEffect(() => {
   //   console.log(JSON.stringify(checkoutStore.state.items, null, 2));
   // });
@@ -109,7 +141,7 @@ export default function Navbar(props) {
             Uranium Glass
           </a>
         </div>
-        <div className="navbar-center">
+        <div className="navbar-center hidden lg:flex">
           <form onSubmit={handleSubmit} className="join">
             <input
               type="text"
@@ -141,6 +173,12 @@ export default function Navbar(props) {
           </form>
         </div>
         <div className="navbar-end gap-4">
+          <button
+            className="btn btn-sm btn-circle btn-outline border-gray-100 hover:border-gray-100 hover:bg-gray-100"
+            onClick={openSearch}
+          >
+            <i class="bi bi-search text-lg text-black"></i>
+          </button>
           <div className="dropdown dropdown-end dropdown-hover">
             <div
               tabIndex={0}

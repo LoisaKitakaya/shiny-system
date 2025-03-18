@@ -83,7 +83,7 @@ export default function Store() {
                     src={store().artist.banner_image}
                     className="h-80 w-full"
                   />
-                  <div className="flex items-center gap-2 absolute top-20 left-16">
+                  <div className="flex items-center gap-2 absolute top-20 left-2 lg:left-16">
                     <div className="card p-0 bg-base-100 flex flex-row justify-start gap-2">
                       <div className="avatar">
                         <div className="w-24 rounded">

@@ -67,16 +67,16 @@ export default function Product() {
           <Switch>
             <Match when={product()}>
               <div className="my-4">
-                <div class="card card-side bg-base-100 shadow-xs border border-gray-50 mb-6">
+                <div class="card card-side bg-base-100 shadow-xs border border-gray-50 mb-6 flex-col lg:flex-row">
                   <figure class="w-1/2">
                     <img
                       src={product().image || "/placeholder-product.jpg"}
                       alt={product().name}
-                      class="h-full object-cover"
+                      class="h-full object-cover w-full mx-auto"
                     />
                   </figure>
-                  <div class="card-body">
-                    <div className="flex flex-col justify-between h-full">
+                  <div class="card-body p-0 lg:p-4">
+                    <div className="flex flex-col justify-between h-full mt-4 lg:mt-0">
                       <div>
                         <div className="flex items-center gap-2">
                           <h2 class="card-title">{product().name}</h2>
