@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import toast from "solid-toast";
 import { createStore } from "solid-js/store";
 import { backendAPI } from "../utils/secrets";
+import { authState } from "./auth_store";
 
 // Favorites Store
 export const createFavoritesStore = () => {
@@ -39,6 +40,12 @@ export const createFavoritesStore = () => {
   };
 
   const toggleFavorite = async (productId) => {
+    if (!authState.isAuthenticated) {
+      toast.error("Please login to perform this action");
+
+      return;
+    }
+
     try {
       const token = Cookies.get("session");
 

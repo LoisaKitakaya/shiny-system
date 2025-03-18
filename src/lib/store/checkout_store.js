@@ -5,6 +5,7 @@ import { createStore } from "solid-js/store";
 import { backendAPI } from "../utils/secrets";
 import { startLoading, stopLoading } from "./loading_store";
 import { closeModal } from "./modal_store";
+import { authState } from "./auth_store";
 
 // Checkout Store
 export const createCheckoutStore = () => {
@@ -27,6 +28,12 @@ export const createCheckoutStore = () => {
 
   const cartActions = {
     addItem: (product, quantity = 1) => {
+      if (!authState.isAuthenticated) {
+        toast.error("Please login to perform this action");
+
+        return;
+      }
+
       const newItems = state.items.find(
         (item) => item.product.id === product.id
       )
@@ -43,6 +50,12 @@ export const createCheckoutStore = () => {
     },
 
     updateQuantity: (productId, quantity) => {
+      if (!authState.isAuthenticated) {
+        toast.error("Please login to perform this action");
+
+        return;
+      }
+
       const newItems = state.items.map((item) =>
         item.product.id === productId
           ? { ...item, quantity: Math.max(1, quantity) }
@@ -53,6 +66,12 @@ export const createCheckoutStore = () => {
     },
 
     removeItem: (productId) => {
+      if (!authState.isAuthenticated) {
+        toast.error("Please login to perform this action");
+
+        return;
+      }
+
       const newItems = state.items.filter(
         (item) => item.product.id !== productId
       );
@@ -69,6 +88,12 @@ export const createCheckoutStore = () => {
   };
 
   const createOrder = async () => {
+    if (!authState.isAuthenticated) {
+      toast.error("Please login to perform this action");
+
+      return;
+    }
+
     try {
       startLoading();
       const token = Cookies.get("session");
@@ -105,7 +130,7 @@ export const createCheckoutStore = () => {
       cartActions.clearCart();
 
       const newTab = window.open(orderData.payment_url, "_blank");
-      
+
       if (newTab) {
         newTab.focus(); // Ensure the new tab is brought into focus
       } else {
@@ -123,6 +148,12 @@ export const createCheckoutStore = () => {
   };
 
   const processPayment = async (orderId) => {
+    if (!authState.isAuthenticated) {
+      toast.error("Please login to perform this action");
+
+      return;
+    }
+    
     const token = Cookies.get("session");
 
     if (!token) {

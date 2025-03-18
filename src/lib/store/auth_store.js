@@ -1,5 +1,6 @@
 import Cookies from "js-cookie";
 import { createStore } from "solid-js/store";
+import toast from "solid-toast";
 
 const [authState, setAuthState] = createStore({
   isAuthenticated: !!Cookies.get("session"),
