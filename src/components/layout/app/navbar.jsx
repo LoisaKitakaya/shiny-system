@@ -204,16 +204,6 @@ export default function Navbar(props) {
                   <a href="/orders">Orders</a>
                 </li>
               </Show>
-              <Show
-                when={
-                  !location.pathname.startsWith("/seller") &&
-                  userInfo.is_artist === "Yes"
-                }
-              >
-                <li>
-                  <a href="/seller">Seller Console</a>
-                </li>
-              </Show>
               <Show when={authState.isAuthenticated}>
                 <div className="divider m-0 p-0"></div>
                 <li>

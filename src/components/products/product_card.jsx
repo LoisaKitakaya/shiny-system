@@ -27,7 +27,7 @@ export default function ProductCard(props) {
         <input
           type="number"
           value={cartItem()?.quantity || 0}
-          className="input input-sm w-36 focus:border-0"
+          className="input input-sm w-36 focus:border-0 text-base-content"
           readOnly={true}
           onChange={(e) =>
             checkoutStore.updateQuantity(item.id, parseInt(e.target.value))
