@@ -15,7 +15,6 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 
 import App from "./App";
 import Home from "./routes";
-import Seller from "./routes/seller";
 import { MetaProvider } from "@solidjs/meta";
 import NotFound from "./routes/404";
 import SingIn from "./routes/auth/sign-in";
@@ -24,12 +23,12 @@ import CreateAccount from "./routes/auth/create-account";
 import TermsAndConditions from "./routes/terms-and-conditions";
 import PrivacyPolicy from "./routes/privacy-policy";
 import Account from "./routes/account";
-import SellerProduct from "./routes/seller/product";
 import Filter from "./routes/filter";
 import RequestPasswordReset from "./routes/auth/security/request-password-reset";
 import Store from "./routes/store";
 import Product from "./routes/store/product";
-import Favorites from "./routes/buyer";
+import Favorites from "./routes/buyer/favorites";
+import Orders from "./routes/buyer/orders";
 
 render(
   () => (
@@ -41,7 +40,9 @@ render(
 
         <Route path="/filter" component={Filter} />
 
-        <Route path="/favorites-orders" component={Favorites} />
+        <Route path="/favorites" component={Favorites} />
+        
+        <Route path="/orders" component={Orders} />
 
         <Route path="/terms-and-conditions" component={TermsAndConditions} />
 
@@ -59,11 +60,6 @@ render(
             path="/security/request-password-reset"
             component={RequestPasswordReset}
           />
-        </Route>
-
-        <Route path="/seller">
-          <Route path="/" component={Seller} />
-          <Route path="/product/:product_id" component={SellerProduct} />
         </Route>
         
         <Route path="/store">

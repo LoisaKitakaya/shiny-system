@@ -28,12 +28,6 @@ export const createCheckoutStore = () => {
 
   const cartActions = {
     addItem: (product, quantity = 1) => {
-      if (!authState.isAuthenticated) {
-        toast.error("Please login to perform this action");
-
-        return;
-      }
-
       const newItems = state.items.find(
         (item) => item.product.id === product.id
       )
@@ -50,12 +44,6 @@ export const createCheckoutStore = () => {
     },
 
     updateQuantity: (productId, quantity) => {
-      if (!authState.isAuthenticated) {
-        toast.error("Please login to perform this action");
-
-        return;
-      }
-
       const newItems = state.items.map((item) =>
         item.product.id === productId
           ? { ...item, quantity: Math.max(1, quantity) }
@@ -66,12 +54,6 @@ export const createCheckoutStore = () => {
     },
 
     removeItem: (productId) => {
-      if (!authState.isAuthenticated) {
-        toast.error("Please login to perform this action");
-
-        return;
-      }
-
       const newItems = state.items.filter(
         (item) => item.product.id !== productId
       );
@@ -148,12 +130,6 @@ export const createCheckoutStore = () => {
   };
 
   const processPayment = async (orderId) => {
-    if (!authState.isAuthenticated) {
-      toast.error("Please login to perform this action");
-
-      return;
-    }
-    
     const token = Cookies.get("session");
 
     if (!token) {

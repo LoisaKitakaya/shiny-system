@@ -40,12 +40,6 @@ export const createFavoritesStore = () => {
   };
 
   const toggleFavorite = async (productId) => {
-    if (!authState.isAuthenticated) {
-      toast.error("Please login to perform this action");
-
-      return;
-    }
-
     try {
       const token = Cookies.get("session");
 

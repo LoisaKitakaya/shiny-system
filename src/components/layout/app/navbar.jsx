@@ -174,7 +174,7 @@ export default function Navbar(props) {
         </div>
         <div className="navbar-end gap-4">
           <button
-            className="btn btn-sm btn-circle btn-outline border-gray-100 hover:border-gray-100 hover:bg-gray-100"
+            className="btn btn-sm btn-circle btn-outline border-gray-100 hover:border-gray-100 hover:bg-gray-100 block lg:hidden"
             onClick={openSearch}
           >
             <i class="bi bi-search text-lg text-black"></i>
@@ -198,7 +198,10 @@ export default function Navbar(props) {
               </Show>
               <Show when={userInfo.is_artist === "No"}>
                 <li>
-                  <a href="/favorites-orders">Favorites/Orders</a>
+                  <a href="/favorites">Favorites</a>
+                </li>
+                <li>
+                  <a href="/orders">Orders</a>
                 </li>
               </Show>
               <Show
@@ -224,24 +227,17 @@ export default function Navbar(props) {
               </Show>
             </ul>
           </div>
-          <Show
-            when={
-              !location.pathname.startsWith("/seller") &&
-              userInfo.is_artist === "No"
-            }
-          >
-            <div className="indicator">
-              <span className="indicator-item text-xs badge badge-neutral badge-xs rounded-2xl font-semibold">
-                {checkoutStore.state.items.length}
-              </span>
-              <button
-                className="btn btn-sm btn-circle btn-outline border-gray-100 hover:border-gray-100 hover:bg-gray-100"
-                onClick={openCart}
-              >
-                <i class="bi bi-bag text-xl text-black"></i>
-              </button>
-            </div>
-          </Show>
+          <div className="indicator">
+            <span className="indicator-item text-xs badge badge-neutral badge-xs rounded-2xl font-semibold">
+              {checkoutStore.state.items.length}
+            </span>
+            <button
+              className="btn btn-sm btn-circle btn-outline border-gray-100 hover:border-gray-100 hover:bg-gray-100"
+              onClick={openCart}
+            >
+              <i class="bi bi-bag text-xl text-black"></i>
+            </button>
+          </div>
         </div>
       </div>
     </>
